@@ -1,0 +1,15 @@
+Package: DSFunctionCreator
+Type: Package
+Maintainer: <Florian.Schwarz@dife.de>
+Author: <Florian.Schwarz@dife.de>
+Version: 1.0.0
+License: GPL-3 + file LICENSE
+Title: Template building functions for DataSHIELD developers
+Description: The package contains functions that support DataSHIELD developers in writing DataSHIELD functions.
+Depends: 
+  R(>= 4.0.0)
+Imports:
+  usethis,
+  fs
+RoxygenNote: 7.1.1
+Encoding: UTF-8
