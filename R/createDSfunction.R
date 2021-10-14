@@ -53,7 +53,7 @@ createDSfunction <- function(include_function_information = TRUE,
     stop("Please provide the class of the input object of the new DataSHIELD function!", call.=FALSE)
   }
 
-  if((include_DS_servercall == TRUE) && (datashield_typ == NULL)){
+  if(include_DS_servercall == TRUE && is.null(datashield_typ)){
     stop("You want to include the call to the server-side but have not provided the typ of server-side function ('assign', 'aggregate')!", call.=FALSE)
   }
 
