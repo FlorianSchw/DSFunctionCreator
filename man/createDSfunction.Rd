@@ -11,14 +11,14 @@ createDSfunction(
   include_DS_Connections_Class = TRUE,
   include_isDefined = TRUE,
   include_checkClass = TRUE,
-  include_typ_Check = TRUE,
+  include_type_Check = TRUE,
   include_methods_Check = TRUE,
   include_newobj = TRUE,
   include_DS_servercall = TRUE,
   function_name = NULL,
   input_object = NULL,
-  object_typ = NULL,
-  datashield_typ = NULL
+  object_type = NULL,
+  datashield_type = NULL
 )
 }
 \arguments{
@@ -34,7 +34,7 @@ createDSfunction(
 
 \item{include_checkClass}{is a logical parameter to include the class check of the input variable in the new R file.}
 
-\item{include_typ_Check}{is a logical parameter to include the second part of the class check in the new R file.}
+\item{include_type_Check}{is a logical parameter to include the second part of the class check in the new R file.}
 
 \item{include_methods_Check}{is a logical parameter to include the methods check part in the new R file.}
 
@@ -46,9 +46,9 @@ createDSfunction(
 
 \item{input_object}{is the name of the input object.}
 
-\item{object_typ}{is the class of the input object.}
+\item{object_type}{is the class of the input object.}
 
-\item{datashield_typ}{represent the typ of DataSHIELD server-side function; either 'assign' or 'aggregate'.}
+\item{datashield_type}{represent the typ of DataSHIELD server-side function; either 'assign' or 'aggregate'.}
 }
 \value{
 creates a new R file for programming a DataSHIELD function
