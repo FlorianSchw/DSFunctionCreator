@@ -58,6 +58,17 @@ createDSfunction <- function(include_function_information = TRUE,
   }
 
 
+  # Check for allowed DataSHIELD types
+  allowedDStype <- c("assign", "aggregate", "assign.table", "assign.resource", "assign.expr")
+
+  if(!(datashield_typ %in% allowedDStype)){
+    stop("The datashield_type needs to be one of the following: 'aggregate', 'assign', 'assign.table', 'assign.resource' or 'assign.expr'.", call.=FALSE)
+  }
+
+
+
+
+
 
   block1 <- c()
   block2 <- c()
@@ -117,7 +128,6 @@ createDSfunction <- function(include_function_information = TRUE,
 
 
 
-
   # This completes the first part of the function by creating a template file upon choosing the building blocks (TRUE/FALSE)
   writeLines(text = c(block1,
                       block2,
@@ -132,11 +142,13 @@ createDSfunction <- function(include_function_information = TRUE,
              con = paste0(directory,"/user_template.R"))
 
 
+
+
   # This part fills the newly created template with user input
   usethis::use_template("user_template.R",
                         save_as = paste0("R/ds.", function_name, ".R"),
                         data = list(function_name = function_name,
-                                    input_object = input_object,
+                                    input_object_assign = input_object_template(input_object),
                                     object_typ = object_typ,
                                     datashield_typ = datashield_typ),
                         package = "DSFunctionCreator")
