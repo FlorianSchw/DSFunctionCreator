@@ -10,7 +10,8 @@ Depends:
   R(>= 4.0.0)
 Imports:
   usethis,
-  fs
+  fs,
+  DT
 RoxygenNote: 7.1.1
 Encoding: UTF-8
 Suggests: 
