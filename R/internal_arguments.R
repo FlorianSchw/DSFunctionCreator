@@ -28,6 +28,9 @@ internal_arguments <- function(df = NULL, type = NULL){
   codelines <- list()
   length_function_name <- list()
 
+  #### Currently function filtered because of non-standard sign causing issues with function
+  df <- df |>
+    filter(!(Function_FileName == "ds.GenotypeData.R"))
 
   for (i in 1:length(df$Function_FileName)){
     names_with_space[[i]] <- paste0(df$Function_FileName[[i]], " ")
