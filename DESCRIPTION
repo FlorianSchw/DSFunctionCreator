@@ -12,7 +12,7 @@ Imports:
   usethis,
   fs,
   DT
-RoxygenNote: 7.1.1
+RoxygenNote: 7.3.2
 Encoding: UTF-8
 Suggests: 
     testthat (>= 3.0.0)

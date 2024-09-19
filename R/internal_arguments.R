@@ -37,7 +37,18 @@ internal_arguments <- function(df = NULL, type = NULL){
     name_without_R[[i]] <- gsub(pattern = ".R ", "", names_with_space[[i]], fixed = TRUE)
     codelines[[i]] <- data.frame(readLines(df$Function_Path[[i]]))
     length_function_name[[i]] <- nchar(name_without_R[[i]])
-    df$Argument_Call[[i]] <- codelines[[i]][which(substr(codelines[[i]][[1]], 1, length_function_name[[i]]) == name_without_R[[i]]),]
+
+    arg_initial <- codelines[[i]][which(substr(codelines[[i]][[1]], 1, length_function_name[[i]]) == name_without_R[[i]]),]
+
+    if(grepl(pattern = "\\{", x = arg_initial)){
+
+        df$Argument_Call[[i]] <- arg_initial
+
+    }
+
+
+
+
   }
 
 
