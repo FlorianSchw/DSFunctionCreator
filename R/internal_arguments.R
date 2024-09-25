@@ -6,6 +6,7 @@
 #' @param type refers to the type of output: either codelines or arguments of a function
 #' @return either codelines (a list) of the DataSHIELD functions or a data.frame containing arguments of the DataSHIELD functions.
 #' @author Florian Schwarz for the German Institute of Human Nutrition
+#' @import dplyr
 #
 
 internal_arguments <- function(df = NULL, type = NULL){
@@ -30,7 +31,7 @@ internal_arguments <- function(df = NULL, type = NULL){
 
   #### Currently function filtered because of non-standard sign causing issues with function
   df <- df |>
-    filter(!(Function_FileName == "ds.GenotypeData.R"))
+    dplyr::filter(!(Function_FileName == "ds.GenotypeData.R"))
 
   for (i in 1:length(df$Function_FileName)){
     names_with_space[[i]] <- paste0(df$Function_FileName[[i]], " ")
@@ -38,16 +39,28 @@ internal_arguments <- function(df = NULL, type = NULL){
     codelines[[i]] <- data.frame(readLines(df$Function_Path[[i]]))
     length_function_name[[i]] <- nchar(name_without_R[[i]])
 
-    arg_initial <- codelines[[i]][which(substr(codelines[[i]][[1]], 1, length_function_name[[i]]) == name_without_R[[i]]),]
 
-    if(grepl(pattern = "\\{", x = arg_initial)){
+    arg_def_vect <- c()
+    codeline_active <- which(substr(codelines[[i]][[1]], 1, length_function_name[[i]]) == name_without_R[[i]])
+    arg_def_complete <- TRUE
+    line_break_index <- 0L
 
-        df$Argument_Call[[i]] <- arg_initial
+    while(arg_def_complete == TRUE){
+
+      arg_def_temp <- codelines[[i]][[1]][(codeline_active + line_break_index)]
+      arg_def_vect <- paste0(arg_def_vect, arg_def_temp)
+
+      if(grepl(pattern = "\\{", x = arg_def_vect)){
+
+        arg_def_complete <- FALSE
+
+      }
+
+      line_break_index <- line_break_index + 1
 
     }
 
-
-
+    df$Argument_Call[[i]] <- arg_def_vect
 
   }
 

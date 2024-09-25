@@ -39,3 +39,18 @@
 ##### for a ds.function
 ##### Better working in an experimental branch ==> should the function contain reeadline function to ask the user
 ##### to proceed / confirm that he is in an experimental branch
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### Setup for GitHub Actions

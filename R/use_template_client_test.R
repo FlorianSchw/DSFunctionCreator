@@ -13,15 +13,13 @@
 #' @author Florian Schwarz for the German Institute of Human Nutrition
 #' @export
 
-use_templateDS <- function(template,
+use_template_client_test <- function(template,
                            data = list(),
                            save_as = NULL,
-                           directory = NULL,
                            package = "DSFunctionCreator") {
   template_contents <- usethis:::render_template(template, data, package = package)
-  directoryCodeCheckFinal <- fs::path_package(package = "DSFunctionCreator", paste0("templates/", directory))
+  directoryCodeCheckFinal <- fs::path_package(package = "DSFunctionCreator", "templates/Tests/Client/Null")
   new <- usethis::write_over(paste0(directoryCodeCheckFinal, save_as), template_contents)
 
   invisible(new)
 }
-

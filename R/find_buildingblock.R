@@ -12,7 +12,7 @@
 
 
 find_buildingblock <- function(buildingblock_name, package = "DSFunctionCreator"){
-  usethis:::check_installed(package)
+  #usethis:::check_installed(package)
   path <- tryCatch(
     fs::path_package(package = package, "templates/BuildingBlocks", buildingblock_name),
     error = function(e) ""

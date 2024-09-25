@@ -12,7 +12,7 @@
 
 
 find_testblock <- function(testblock_name, package = "DSFunctionCreator"){
-  usethis:::check_installed(package)
+  #usethis:::check_installed(package)
   path <- tryCatch(
     fs::path_package(package = package, "templates/Tests/Client/TestBlocks", testblock_name),
     error = function(e) ""

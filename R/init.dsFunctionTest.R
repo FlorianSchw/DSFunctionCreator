@@ -1,124 +1,133 @@
 #'
-#' @title XXXX
-#' @description XXXX
-#' @details XXXX
-#' @param path_to_dsPackages XXXX
-#' @param package_type XXXXX
-#' @param stopMessage XXXXX
-#' @return XXXX
+#' @title Initialising test file for a specific function
+#' @description This function initialises a test-ds.function.R file in the respective testthat structure
+#' @details The initial file for now contains the typical open and closing as well as the simple null-argument
+#' test of the first argument in the function call.
+#' @param function_name Name of the ds.function
+#' @return Nothing for now. Files will be created
 #' @author Florian Schwarz for the German Institute of Human Nutrition
-#' @import DT
+#' @import dplyr
+#' @import here
+#' @import stringr
+#' @import fs
 #' @export
 #'
 
-init.dsFunctionTest <- function(ds.function_name = NULL){
+init.dsFunctionTest <- function(function_name = NULL){
 
   # Input checks
-  if(is.null(ds.function_name)){
+  if(is.null(function_name)){
     stop("Please provide the name of the DataSHIELD function for which a test shall be created!", call.=FALSE)
   }
 
-
-
   #### for a single function first
-
 
   block1 <- c()
   block2 <- c()
   block3 <- c()
-  block4 <- c()
-  block5 <- c()
-  block6 <- c()
-  block7 <- c()
-  block8 <- c()
-  block9 <- c()
-  block10 <- c()
 
 
-
-  block1 <- readLines(find_testblock("test_connection_dataset_cnsim_type1.R"))
-  block2 <- readLines(find_testblock("test_testthat_function_opening.R"))
-  block3 <- readLines(find_testblock("test_testthat_data.frame_preparations.R"))
+  #### Checking Argument Names of the Function
 
 
+  function_filename <- paste0(function_name, ".R")
+
+  R_functions <- CodeCheck.ArgumentOverview(path_to_dsPackages = here::here() %>% dirname(),
+                                            package_type = "Client")
 
 
+  Arguments_Function <- R_functions |>
+    dplyr::filter(Function_FileName == paste0(function_name, ".R")) |>
+    dplyr::select(!(Function_FileName)) |>
+    unlist()
 
-  # Here I need to retrieve information from the other R Script
+  Arguments_Function <- na.omit(Arguments_Function)
+
+  Client_R_Paths_ds <- FilePathFinder(path = here::here() %>% dirname(),
+                                                          type = "Client") |>
+    dplyr::filter(Function_FileName == paste0(function_name, ".R"))
 
 
+  Client_Arguments <- internal_arguments(df = Client_R_Paths_ds, type = "codelines")
 
 
-  if(include_DS_Connections == TRUE){
-    block3 <- readLines(find_testblock("DS_Connections.R"))
+  stop_message <- c()
+  stop_argument <- c()
+  codeline_nr <- c()
+  index <- 1L
+
+  for (k in 1:length(Arguments_Function)){
+    for (i in 1:length(Client_Arguments[[1]][[1]])){
+
+      length_argument <- nchar(Arguments_Function[k])
+      null_test <- paste0("if(is.null(", Arguments_Function[k], ")){")
+
+
+      if(substr(stringr::str_trim(Client_Arguments[[1]][[1]][i]), 1, 14+length_argument) == null_test){
+        if(substr(stringr::str_trim(Client_Arguments[[1]][[1]][i+1]), 1, 5) == "stop("){
+          if(substr(stringr::str_trim(Client_Arguments[[1]][[1]][i+2]), 1, 1) == "}"){
+
+            if_stop_message <- stringr::str_trim(Client_Arguments[[1]][[1]][i+1])
+            if_stop_message <- gsub("stop\\(", "", if_stop_message)
+            stop_message[index] <- gsub(", call.=FALSE\\)", "", if_stop_message)
+            stop_argument[index] <- Arguments_Function[k]
+
+            index <- index + 1L
+
+          }
+        }
+      }
+
+    }
   }
 
-  if(include_DS_Connections_Class == TRUE){
-    block4 <- readLines(find_testblock("DS_Connections_Class.R"))
+  stop_message_collector <- data.frame(stop_argument,
+                                       stop_message)
+
+
+
+
+    testopeningDirectory <- fs::path_package(package = "DSFunctionCreator", "templates/Tests/Client/TestStructure")
+
+    use_templateDS("/Tests/Client/TestStructure/opening_template.R",
+                             save_as = paste0("/client_test_opening_", function_name, ".R"),
+                             data = list(function_input = function_name),
+                             directory = "Tests/Client/TestStructure",
+                             package = "DSFunctionCreator")
+
+    block1 <- readLines(paste0(testopeningDirectory, "/client_test_opening_", function_name, ".R"))
+
+
+
+  if(!(is.null(stop_message_collector))){
+
+    argNullDirectory <- fs::path_package(package = "DSFunctionCreator", "templates/Tests/Client/Null")
+
+    use_templateDS("/Tests/Client/Null/expect_error_null1.R",
+                   save_as = paste0("/client_test_arg_null_1_", function_name, ".R"),
+                   data = list(function_input = function_name,
+                               stop_message = stop_message_collector$stop_message[1]),
+                   directory = "Tests/Client/Null",
+                   package = "DSFunctionCreator")
+
+    block2 <- readLines(paste0(argNullDirectory, "/client_test_arg_null_1_", function_name, ".R"))
   }
 
-  if(include_isDefined == TRUE){
-    block5 <- readLines(find_testblock("isDefined.R"))
-  }
 
-  if(include_checkClass == TRUE){
-    block6 <- readLines(find_testblock("checkClass.R"))
-  }
-
-  if(include_type_Check == TRUE){
-    block7 <- readLines(find_testblock("type_Check.R"))
-  }
-
-  if(include_methods_Check == TRUE){
-    block8 <- readLines(find_testblock("methods_Check.R"))
-  }
-
-  if(include_newobj == TRUE){
-    block9 <- readLines(find_testblock("newobj.R"))
-  }
-
-  if(include_DS_servercall == TRUE){
-    block10 <- readLines(find_testblock("DS_servercall.R"))
-  }
-
-
-  directory <- fs::path_package(package = "DSFunctionCreator", "templates")
-
+    block3 <- readLines(fs::path_package(package = "DSFunctionCreator",
+                                                "templates/Tests/Client/TestStructure/closingLine.R"))
 
 
   # This completes the first part of the function by creating a template file upon choosing the building blocks (TRUE/FALSE)
   writeLines(text = c(block1,
                       block2,
-                      block3,
-                      block4,
-                      block5,
-                      block6,
-                      block7,
-                      block8,
-                      block9,
-                      block10),
-             con = paste0(directory,"/user_template.R"))
-
-
-
-
-  # This part fills the newly created template with user input
-  usethis::use_template("user_template.R",
-                        save_as = paste0("R/ds.", function_name, ".R"),
-                        data = list(function_name = function_name,
-                                    input_object_assign = input_object_template(input_object),
-                                    object_type = object_type,
-                                    datashield_type = datashield_type),
-                        package = "DSFunctionCreator")
-
-
-
+                      block3),
+             con = here::here(paste0("tests/testthat/test-", function_name, ".R")))
 
 
   return()
 
 }
-
 
 
 

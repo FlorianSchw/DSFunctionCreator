@@ -9,11 +9,13 @@ Description: The package contains functions that support DataSHIELD developers i
 Depends: 
   R(>= 4.0.0)
 Imports:
-  usethis,
-  fs,
-  DT
+    usethis,
+    here,
+    dplyr,
+    purrr,
+    fs,
+    DT,
+    DSLite
 RoxygenNote: 7.3.2
 Encoding: UTF-8
-Suggests: 
-    testthat (>= 3.0.0)
 Config/testthat/edition: 3

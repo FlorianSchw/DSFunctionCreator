@@ -43,9 +43,37 @@ internal_argumentCleaner <- function(Client_Arguments = NULL){
   }
 
 
-  dd <- data.frame(matrix(ncol = 15, nrow = length(Client_Arguments$Argument_Call)))
+  dd <- data.frame(matrix(ncol = 25, nrow = length(Client_Arguments$Argument_Call)))
   Client_Arguments <- cbind(Client_Arguments, dd)
-  colnames(Client_Arguments) <- c("Function_FileName", "Function_Path", "Argument_Call", "Arguments", "Arg1", "Arg2", "Arg3", "Arg4", "Arg5", "Arg6", "Arg7", "Arg8", "Arg9", "Arg10", "Arg11", "Arg12", "Arg13", "Arg14", "Arg15")
+  colnames(Client_Arguments) <- c("Function_FileName",
+                                  "Function_Path",
+                                  "Argument_Call",
+                                  "Arguments",
+                                  "Arg1",
+                                  "Arg2",
+                                  "Arg3",
+                                  "Arg4",
+                                  "Arg5",
+                                  "Arg6",
+                                  "Arg7",
+                                  "Arg8",
+                                  "Arg9",
+                                  "Arg10",
+                                  "Arg11",
+                                  "Arg12",
+                                  "Arg13",
+                                  "Arg14",
+                                  "Arg15",
+                                  "Arg16",
+                                  "Arg17",
+                                  "Arg18",
+                                  "Arg19",
+                                  "Arg20",
+                                  "Arg21",
+                                  "Arg22",
+                                  "Arg23",
+                                  "Arg24",
+                                  "Arg25")
 
   # Assigning arguments to separate columns
   for (i in 1:length(Client_Arguments$Argument_Call)){
@@ -64,6 +92,16 @@ internal_argumentCleaner <- function(Client_Arguments = NULL){
     Client_Arguments$Arg13[[i]] <- Client_Arguments$Arguments[[i]][13]
     Client_Arguments$Arg14[[i]] <- Client_Arguments$Arguments[[i]][14]
     Client_Arguments$Arg15[[i]] <- Client_Arguments$Arguments[[i]][15]
+    Client_Arguments$Arg16[[i]] <- Client_Arguments$Arguments[[i]][16]
+    Client_Arguments$Arg17[[i]] <- Client_Arguments$Arguments[[i]][17]
+    Client_Arguments$Arg18[[i]] <- Client_Arguments$Arguments[[i]][18]
+    Client_Arguments$Arg19[[i]] <- Client_Arguments$Arguments[[i]][19]
+    Client_Arguments$Arg20[[i]] <- Client_Arguments$Arguments[[i]][20]
+    Client_Arguments$Arg21[[i]] <- Client_Arguments$Arguments[[i]][21]
+    Client_Arguments$Arg22[[i]] <- Client_Arguments$Arguments[[i]][22]
+    Client_Arguments$Arg23[[i]] <- Client_Arguments$Arguments[[i]][23]
+    Client_Arguments$Arg24[[i]] <- Client_Arguments$Arguments[[i]][24]
+    Client_Arguments$Arg25[[i]] <- Client_Arguments$Arguments[[i]][25]
   }
 
 
@@ -133,6 +171,48 @@ internal_argumentCleaner <- function(Client_Arguments = NULL){
       Client_Analysis$Arg15[[i]] <- strsplit(Client_Analysis$Arg15[[i]], "=", fixed = TRUE)[[1]][1]
     }
 
+    if(grepl("=", Client_Analysis$Arg16[[i]], fixed = TRUE) == TRUE){
+      Client_Analysis$Arg16[[i]] <- strsplit(Client_Analysis$Arg16[[i]], "=", fixed = TRUE)[[1]][1]
+    }
+
+    if(grepl("=", Client_Analysis$Arg17[[i]], fixed = TRUE) == TRUE){
+      Client_Analysis$Arg17[[i]] <- strsplit(Client_Analysis$Arg17[[i]], "=", fixed = TRUE)[[1]][1]
+    }
+
+    if(grepl("=", Client_Analysis$Arg18[[i]], fixed = TRUE) == TRUE){
+      Client_Analysis$Arg18[[i]] <- strsplit(Client_Analysis$Arg18[[i]], "=", fixed = TRUE)[[1]][1]
+    }
+
+    if(grepl("=", Client_Analysis$Arg19[[i]], fixed = TRUE) == TRUE){
+      Client_Analysis$Arg19[[i]] <- strsplit(Client_Analysis$Arg19[[i]], "=", fixed = TRUE)[[1]][1]
+    }
+
+    if(grepl("=", Client_Analysis$Arg20[[i]], fixed = TRUE) == TRUE){
+      Client_Analysis$Arg20[[i]] <- strsplit(Client_Analysis$Arg20[[i]], "=", fixed = TRUE)[[1]][1]
+    }
+
+    if(grepl("=", Client_Analysis$Arg21[[i]], fixed = TRUE) == TRUE){
+      Client_Analysis$Arg21[[i]] <- strsplit(Client_Analysis$Arg21[[i]], "=", fixed = TRUE)[[1]][1]
+    }
+
+    if(grepl("=", Client_Analysis$Arg22[[i]], fixed = TRUE) == TRUE){
+      Client_Analysis$Arg22[[i]] <- strsplit(Client_Analysis$Arg22[[i]], "=", fixed = TRUE)[[1]][1]
+    }
+
+    if(grepl("=", Client_Analysis$Arg23[[i]], fixed = TRUE) == TRUE){
+      Client_Analysis$Arg23[[i]] <- strsplit(Client_Analysis$Arg23[[i]], "=", fixed = TRUE)[[1]][1]
+    }
+
+    if(grepl("=", Client_Analysis$Arg24[[i]], fixed = TRUE) == TRUE){
+      Client_Analysis$Arg24[[i]] <- strsplit(Client_Analysis$Arg24[[i]], "=", fixed = TRUE)[[1]][1]
+    }
+
+    if(grepl("=", Client_Analysis$Arg25[[i]], fixed = TRUE) == TRUE){
+      Client_Analysis$Arg25[[i]] <- strsplit(Client_Analysis$Arg25[[i]], "=", fixed = TRUE)[[1]][1]
+    }
+
+
+
 
     # Cleaning up spaces
     if(grepl(" ", Client_Analysis$Arg1[[i]], fixed = TRUE) == TRUE){
@@ -195,6 +275,45 @@ internal_argumentCleaner <- function(Client_Arguments = NULL){
       Client_Analysis$Arg15[[i]] <- gsub(pattern = " ", "", Client_Analysis$Arg15[[i]], fixed = TRUE)
     }
 
+    if(grepl(" ", Client_Analysis$Arg16[[i]], fixed = TRUE) == TRUE){
+      Client_Analysis$Arg16[[i]] <- gsub(pattern = " ", "", Client_Analysis$Arg16[[i]], fixed = TRUE)
+    }
+
+    if(grepl(" ", Client_Analysis$Arg17[[i]], fixed = TRUE) == TRUE){
+      Client_Analysis$Arg17[[i]] <- gsub(pattern = " ", "", Client_Analysis$Arg17[[i]], fixed = TRUE)
+    }
+
+    if(grepl(" ", Client_Analysis$Arg18[[i]], fixed = TRUE) == TRUE){
+      Client_Analysis$Arg18[[i]] <- gsub(pattern = " ", "", Client_Analysis$Arg18[[i]], fixed = TRUE)
+    }
+
+    if(grepl(" ", Client_Analysis$Arg19[[i]], fixed = TRUE) == TRUE){
+      Client_Analysis$Arg19[[i]] <- gsub(pattern = " ", "", Client_Analysis$Arg19[[i]], fixed = TRUE)
+    }
+
+    if(grepl(" ", Client_Analysis$Arg20[[i]], fixed = TRUE) == TRUE){
+      Client_Analysis$Arg20[[i]] <- gsub(pattern = " ", "", Client_Analysis$Arg10[[i]], fixed = TRUE)
+    }
+
+    if(grepl(" ", Client_Analysis$Arg21[[i]], fixed = TRUE) == TRUE){
+      Client_Analysis$Arg21[[i]] <- gsub(pattern = " ", "", Client_Analysis$Arg21[[i]], fixed = TRUE)
+    }
+
+    if(grepl(" ", Client_Analysis$Arg22[[i]], fixed = TRUE) == TRUE){
+      Client_Analysis$Arg22[[i]] <- gsub(pattern = " ", "", Client_Analysis$Arg22[[i]], fixed = TRUE)
+    }
+
+    if(grepl(" ", Client_Analysis$Arg23[[i]], fixed = TRUE) == TRUE){
+      Client_Analysis$Arg23[[i]] <- gsub(pattern = " ", "", Client_Analysis$Arg23[[i]], fixed = TRUE)
+    }
+
+    if(grepl(" ", Client_Analysis$Arg24[[i]], fixed = TRUE) == TRUE){
+      Client_Analysis$Arg24[[i]] <- gsub(pattern = " ", "", Client_Analysis$Arg24[[i]], fixed = TRUE)
+    }
+
+    if(grepl(" ", Client_Analysis$Arg25[[i]], fixed = TRUE) == TRUE){
+      Client_Analysis$Arg25[[i]] <- gsub(pattern = " ", "", Client_Analysis$Arg25[[i]], fixed = TRUE)
+    }
 
   }
 
