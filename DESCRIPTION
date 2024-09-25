@@ -13,6 +13,7 @@ Imports:
     here,
     dplyr,
     purrr,
+    stringr,
     fs,
     DT,
     DSLite
